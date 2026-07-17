@@ -1,4 +1,10 @@
-import { ClerkProvider } from "@clerk/nextjs"
+import {
+  ClerkProvider,
+  Show,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs"
 import { Geist, Geist_Mono } from "next/font/google"
 
 import "./globals.css"
@@ -32,6 +38,23 @@ export default function RootLayout({
       <body>
         <ClerkProvider>
           <ThemeProvider>
+            <header className="flex items-center justify-end gap-3 border-b px-4 py-3">
+              <Show when="signed-out">
+                <SignInButton mode="modal">
+                  <button className="rounded-md px-4 py-1.5 text-sm font-medium hover:bg-accent">
+                    Sign in
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal">
+                  <button className="rounded-md bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+                    Sign up
+                  </button>
+                </SignUpButton>
+              </Show>
+              <Show when="signed-in">
+                <UserButton />
+              </Show>
+            </header>
             {children}
             <Toaster />
           </ThemeProvider>
