@@ -3,12 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-<<<<<<< Updated upstream
-import { cn } from "@/lib/utils";
-=======
 import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/utils"
->>>>>>> Stashed changes
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -34,16 +30,12 @@ export default function RootLayout({
       )}
     >
       <body>
-<<<<<<< Updated upstream
-        <ThemeProvider>{children}</ThemeProvider>
-=======
         <ClerkProvider>
           <ThemeProvider>
             {children}
             <Toaster />
           </ThemeProvider>
         </ClerkProvider>
->>>>>>> Stashed changes
       </body>
     </html>
   )
