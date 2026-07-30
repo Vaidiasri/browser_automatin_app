@@ -16,6 +16,9 @@ export function HomeDemo() {
             Button
           </Button>
         </div>
+        <a href="/organization" className="underline hover:no-underline">
+          Manage your organization
+        </a>
         <div className="font-mono text-xs text-muted-foreground">
           (Press <kbd>d</kbd> to toggle dark mode)
         </div>
