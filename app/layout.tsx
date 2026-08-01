@@ -1,10 +1,8 @@
 import {
   ClerkProvider,
-  OrganizationSwitcher,
   Show,
   SignInButton,
   SignUpButton,
-  UserButton,
 } from "@clerk/nextjs"
 import { Geist, Geist_Mono } from "next/font/google"
 
@@ -36,11 +34,13 @@ export default function RootLayout({
         geist.variable
       )}
     >
-      <body>
+      <body className="flex min-h-svh flex-col">
         <ClerkProvider>
           <ThemeProvider>
-            <header className="flex items-center justify-end gap-3 border-b px-4 py-3">
-              <Show when="signed-out">
+            {/* Signed-in chrome lives in the sidebar (components/app-sidebar.tsx),
+                so the top bar is only for signed-out visitors. */}
+            <Show when="signed-out">
+              <header className="flex shrink-0 items-center justify-end gap-3 border-b px-4 py-3">
                 <SignInButton mode="modal">
                   <button className="rounded-md px-4 py-1.5 text-sm font-medium hover:bg-accent">
                     Sign in
@@ -51,13 +51,10 @@ export default function RootLayout({
                     Sign up
                   </button>
                 </SignUpButton>
-              </Show>
-              <Show when="signed-in">
-                <OrganizationSwitcher afterCreateOrganizationUrl="/organization" />
-                <UserButton />
-              </Show>
-            </header>
-            {children}
+              </header>
+            </Show>
+            {/* div, not main: SidebarInset renders the <main> for dashboard routes. */}
+            <div className="flex flex-1 flex-col">{children}</div>
             <Toaster />
           </ThemeProvider>
         </ClerkProvider>
