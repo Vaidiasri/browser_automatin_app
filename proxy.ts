@@ -5,9 +5,9 @@ import { clerkMiddleware } from "@clerk/nextjs/server"
 // resource-based check, e.g. in the page/layout/route handler:
 //   import { auth } from "@clerk/nextjs/server"
 //   const { userId } = await auth()
-//   if (!userId) redirect("/sign-in")
-// ponytail: no protected routes exist yet, so nothing to guard here. Add per-route
-// auth() checks when you build a page that needs login. (createRouteMatcher +
+//   if (!userId) redirect("/auth/sign-in")
+// ponytail: routes guard themselves with auth() (see app/page.tsx). Add the same
+// two-line check to each new page that needs login. (createRouteMatcher +
 // auth.protect() in middleware is deprecated — path-matching can leave resources reachable.)
 export default clerkMiddleware()
 
