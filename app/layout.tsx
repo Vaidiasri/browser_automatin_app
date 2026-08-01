@@ -1,5 +1,6 @@
 import {
   ClerkProvider,
+  OrganizationSwitcher,
   Show,
   SignInButton,
   SignUpButton,
@@ -52,6 +53,7 @@ export default function RootLayout({
                 </SignUpButton>
               </Show>
               <Show when="signed-in">
+                <OrganizationSwitcher afterCreateOrganizationUrl="/organization" />
                 <UserButton />
               </Show>
             </header>
