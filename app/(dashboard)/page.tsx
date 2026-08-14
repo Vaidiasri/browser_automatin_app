@@ -17,24 +17,29 @@ export default async function Page() {
   if (!userId) redirect("/auth/sign-in")
 
   return (
-    // Empty already ships flex-1; <main> in app/layout.tsx gives it the height to fill.
-    <Empty>
-      <EmptyHeader>
-        <EmptyMedia variant="icon" className="size-12 [&_svg]:size-6">
-          <Workflow />
-        </EmptyMedia>
-        <EmptyTitle className="text-xl">No workflow selected</EmptyTitle>
-        <EmptyDescription>
-          Select a workflow from the sidebar or create a new one to get started.
-        </EmptyDescription>
-      </EmptyHeader>
-      <EmptyContent>
-        {/* ponytail: inert until workflow creation exists — wire onClick then. */}
-        <Button>
-          <Plus />
-          New workflow
-        </Button>
-      </EmptyContent>
-    </Empty>
+    // ponytail: the page owns its own box instead of inheriting one from the
+    // parent flex chain. h-full pins it to the <main> (SidebarInset, from
+    // app/(dashboard)/layout.tsx); min-h-0/min-w-0 let it shrink below its
+    // content; overflow-hidden means neither axis can ever scroll here.
+    <div className="flex h-full min-h-0 w-full min-w-0 flex-col overflow-hidden">
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant="icon" className="size-12 [&_svg]:size-6">
+            <Workflow />
+          </EmptyMedia>
+          <EmptyTitle className="text-xl">No workflow selected</EmptyTitle>
+          <EmptyDescription>
+            Select a workflow from the sidebar or create a new one to get started.
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          {/* ponytail: inert until workflow creation exists — wire onClick then. */}
+          <Button>
+            <Plus />
+            New workflow
+          </Button>
+        </EmptyContent>
+      </Empty>
+    </div>
   )
 }

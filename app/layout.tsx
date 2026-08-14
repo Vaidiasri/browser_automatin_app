@@ -29,12 +29,16 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(
         "antialiased",
+        // ponytail: overscroll-none kills Chromium's elastic bounce. Without it a
+        // trackpad gesture drags the whole app and paints an overscroll pill at the
+        // edge — reads as scrolling even though nothing actually overflows.
+        "overscroll-none",
         fontMono.variable,
         "font-sans",
         geist.variable
       )}
     >
-      <body className="flex min-h-svh flex-col">
+      <body className="flex min-h-svh flex-col overscroll-none">
         <ClerkProvider>
           <ThemeProvider>
             {/* Signed-in chrome lives in the sidebar (components/app-sidebar.tsx),
