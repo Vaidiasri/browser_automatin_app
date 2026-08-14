@@ -14,11 +14,14 @@ export default async function DashboardLayout({
   const defaultOpen = cookieStore.get("sidebar_state")?.value !== "false"
 
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
+    // ponytail: the provider ships min-h-svh, which lets the shell grow past the
+    // viewport and scroll as a page. h-svh pins it; overflow-hidden stops anything
+    // inside from pushing the frame itself into a scroll.
+    <SidebarProvider defaultOpen={defaultOpen} className="h-svh overflow-hidden">
       <AppSidebar />
       {/* The collapse trigger lives in the sidebar header (see app-sidebar.tsx),
           so the content area needs no top bar of its own. */}
-      <SidebarInset>{children}</SidebarInset>
+      <SidebarInset className="min-h-0 overflow-hidden border shadow-none">{children}</SidebarInset>
     </SidebarProvider>
   )
 }

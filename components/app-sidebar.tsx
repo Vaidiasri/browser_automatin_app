@@ -1,6 +1,7 @@
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
-import { Plus } from "lucide-react"
+import { Plus, Workflow } from "lucide-react"
 
+import { ThemeToggle } from "@/components/theme-toggle"
 import {
   Sidebar,
   SidebarContent,
@@ -39,8 +40,12 @@ export function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className="flex-row items-center justify-between gap-1">
+    // ponytail: variant="inset" is what arms SidebarInset's m-2/rounded-xl/shadow —
+    // the styles already ship with the component, they just need the peer variant.
+    <Sidebar collapsible="icon" variant="inset" {...props}>
+      {/* Collapsed the rail is 3rem, too narrow for avatar and trigger side by
+          side — stack them so the trigger stays reachable. */}
+      <SidebarHeader className="flex-row items-center justify-between gap-1 group-data-[collapsible=icon]:flex-col">
         <OrganizationSwitcher
           hidePersonal={false}
           appearance={{
@@ -54,9 +59,7 @@ export function AppSidebar({
             },
           }}
         />
-        {/* Collapsed, there's no room beside the avatar — the rail and Ctrl/Cmd+B
-            still expand it. */}
-        <SidebarTrigger className={collapsedHidden} />
+        <SidebarTrigger />
       </SidebarHeader>
 
       <SidebarContent>
@@ -69,10 +72,15 @@ export function AppSidebar({
             <span className="sr-only">New workflow</span>
           </SidebarGroupAction>
           <SidebarGroupContent>
-            <SidebarMenu>
+            {/* SidebarMenu ships gap-0, so rows sit flush and the list reads as one
+                block. gap-1 gives each row its own hit area. */}
+            <SidebarMenu className="gap-1">
               {workflows.map((name) => (
                 <SidebarMenuItem key={name}>
                   <SidebarMenuButton tooltip={name}>
+                    {/* Collapsed, the button is 2rem and the label truncates to a
+                        single letter — the icon is what stays legible. */}
+                    <Workflow />
                     <span>{name}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -82,8 +90,13 @@ export function AppSidebar({
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
-        <SidebarMenu>
+      {/* Divider separates the account zone from the workflow list — without it the
+          two read as one run of rows. */}
+      <SidebarFooter className="border-t border-sidebar-border">
+        <SidebarMenu className="gap-1">
+          <SidebarMenuItem>
+            <ThemeToggle />
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <UserButton
               appearance={{
