@@ -47,7 +47,9 @@ function ThemeHotkey() {
         return
       }
 
-      if (event.key.toLowerCase() !== "d") {
+      // ponytail: synthetic "keydown" events (Clerk, password managers) can be
+      // plain Events with no `key`, so optional-chain before calling a method
+      if (event.key?.toLowerCase() !== "d") {
         return
       }
 
