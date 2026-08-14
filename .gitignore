@@ -37,3 +37,8 @@ next-env.d.ts
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# agent tooling — local only. Committing these made railpack plan a COPY for every
+# nested package.json, which .dockerignore then filtered out of the build context.
+.claude/
+.agents/
