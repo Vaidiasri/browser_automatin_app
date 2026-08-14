@@ -1,7 +1,8 @@
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
-import { Plus, Workflow } from "lucide-react"
+import { Plus } from "lucide-react"
 
 import { ThemeToggle } from "@/components/theme-toggle"
+import { WorkflowNav } from "@/components/workflow-nav"
 import {
   Sidebar,
   SidebarContent,
@@ -12,7 +13,6 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
   SidebarTrigger,
@@ -72,20 +72,9 @@ export function AppSidebar({
             <span className="sr-only">New workflow</span>
           </SidebarGroupAction>
           <SidebarGroupContent>
-            {/* SidebarMenu ships gap-0, so rows sit flush and the list reads as one
-                block. gap-1 gives each row its own hit area. */}
-            <SidebarMenu className="gap-1">
-              {workflows.map((name) => (
-                <SidebarMenuItem key={name}>
-                  <SidebarMenuButton tooltip={name}>
-                    {/* Collapsed, the button is 2rem and the label truncates to a
-                        single letter — the icon is what stays legible. */}
-                    <Workflow />
-                    <span>{name}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            {/* Inline when expanded, a single flyout entry when collapsed —
+                see components/workflow-nav.tsx. */}
+            <WorkflowNav workflows={workflows} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
